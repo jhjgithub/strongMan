@@ -3,10 +3,10 @@
     "model": "auth.user",
     "pk": 1,
     "fields": {
-      "username": "John",
-      "password": "pbkdf2_sha256$24000$k0JK2lfyW9Zz$Kz3KZeiJXgGY0IAexR1TZWqjx28ZJy6N+o/KSAQW2BM=",
-      "first_name": "John",
-      "last_name": "Lennon"
+      "username": "jiho",
+      "password": "pbkdf2_sha256$24000$6aWsgMSjL6Gr$o2myiGG6eur9zURV5a2OQ7Oxwk6YbT8J4NoWuAHD5rg=",
+      "first_name": "Jiho",
+      "last_name": "Jung"
     }
   }
 ]

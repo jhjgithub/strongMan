@@ -31,7 +31,7 @@
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
     <script src="{% static 'js/ie10-viewport-bug-workaround.js' %}"></script>
 
-    {% block html-head %}{% endblock html-head %}
+	{% block html-head %}{% endblock html-head %}
 </head>
 <body>
     <nav class="navbar navbar-inverse navbar-static-top">
@@ -60,7 +60,8 @@
                 <ul class="nav navbar-nav navbar-right">
                     {% if user.is_authenticated %}
 
-                        <li><a id="mode-switcher" href="#" onclick="toggle_navbar_visibility();">Switch to Client mode</a></li>
+					<!-- <li><a id="mode-switcher" href="#" onclick="toggle_navbar_visibility();">Switch to Client mode</a></li> -->
+                        <li><a id="mode-switcher" ">Server mode</a></li>
 
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
@@ -109,8 +110,10 @@
         {% block content %}{% endblock content %}
     </div>
 
-    <footer class="footer">
-        <div class="container">
+	<footer class="footer">
+		<!-- <div class="container"> -->
+		<div >
+			<!--
             <div class="text-center">
                 <div class="logo">
                     <a href="https://twitter.com/strongswan" target="_blank" title="Follow us on Twitter">
@@ -128,6 +131,7 @@
                     </a>
                 </div>
             </div>
+			-->
             <div class="text-center copyright">
                 <p>Copyright &copy; 2016 strongSwan</p>
             </div>

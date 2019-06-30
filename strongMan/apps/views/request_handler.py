@@ -92,8 +92,8 @@ class PwChangeHandler(object):
         if password.isalpha():
             return False
 
-        if not self._has_upper(password):
-            return False
+        #if not self._has_upper(password):
+        #    return False
 
         if not self._has_lower(password):
             return False

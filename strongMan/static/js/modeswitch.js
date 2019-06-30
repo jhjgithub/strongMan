@@ -3,7 +3,8 @@ var currentmode;
 
 function loadCurrentMode(){
     var element = document.getElementById('mode-switcher');
-    currentmode = getCookie("currentmode");
+    //currentmode = getCookie("currentmode");
+    currentmode = null
     var currentmodeWasNull = false;
     if (currentmode === null) {
         setCookie('currentmode',"",-1);
@@ -15,12 +16,14 @@ function loadCurrentMode(){
     if (currentmode === 'server') {
         $(".server-mode").removeClass("visible-mode invisible-mode").addClass("visible-mode");
         $(".client-mode").removeClass("visible-mode invisible-mode").addClass("invisible-mode");
-        element.innerHTML = 'Switch to Client mode';
+        //element.innerHTML = 'Switch to Client mode';
+        element.innerHTML = 'Server Mode';
     }
     else {
         $(".server-mode").removeClass("visible-mode invisible-mode").addClass("invisible-mode");
         $(".client-mode").removeClass("visible-mode invisible-mode").addClass("visible-mode");
-        element.innerHTML = 'Switch to Server mode';
+        //element.innerHTML = 'Switch to Server mode';
+        element.innerHTML = 'Server Mode';
     }
     if(currentmodeWasNull){
         $(".one-time-alert").removeClass("hide-after-switch");
@@ -34,21 +37,24 @@ function loadCurrentMode(){
 function toggle_navbar_visibility() {
 
     var element = document.getElementById('mode-switcher');
-    currentmode = getCookie("currentmode");
+    //currentmode = getCookie("currentmode");
+    currentmode = 'client'
 
     if(currentmode === 'server'){
         $(".server-mode").removeClass("visible-mode invisible-mode").addClass("invisible-mode");
         $(".client-mode").removeClass("visible-mode invisible-mode").addClass("visible-mode");
 
 
-        element.innerHTML = 'Switch to Server mode';
+        //element.innerHTML = 'Switch to Server mode';
+        element.innerHTML = 'Server Mode';
         setCookie('currentmode',"",-1);
         setCookie('currentmode', 'client', 100);
     }
     else {
         $(".server-mode").removeClass("visible-mode invisible-mode").addClass("visible-mode");
         $(".client-mode").removeClass("visible-mode invisible-mode").addClass("invisible-mode");
-        element.innerHTML = 'Switch to Client mode';
+        //element.innerHTML = 'Switch to Client mode';
+        element.innerHTML = 'Client Mode';
         setCookie('currentmode',"",-1);
         setCookie('currentmode', 'server', 100);
     }
