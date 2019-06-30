@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% load render_table from django_tables2 %}
+{% load staticfiles %}
+{% block html-head %}
+<style>
+table.tunnel-header {
+    border-collapse: collapse;
+    text-align: center;
+    line-height: 1.0;
+    margin: 10px 1px;
+}
+table.tunnel-header thead th {
+    padding: 1px;
+    margin: 1px 1px;
+    font-weight: bold;
+    font-size: x-large;
+}
+
+table.tunnel {
+    border-collapse: collapse;
+    text-align: center;
+    line-height: 1.0;
+    border-left: 1px solid #ccc;
+    margin: 1px 1px;
+}
+
+table.tunnel thead th {
+    padding: 5px;
+    font-weight: bold;
+    border-top: 1px solid #ccc;
+    border-right: 1px solid #ccc;
+    border-bottom: 2px solid #c00;
+    background: #dcdcd1;
+}
+table.tunnel tbody th {
+    #width: 150px;
+    padding: 5px;
+    font-weight: bold;
+    vertical-align: top;
+    border-right: 1px solid #ccc;
+    border-bottom: 1px solid #ccc;
+    background: #ececec;
+}
+table.tunnel td {
+    #width: 350px;
+    padding: 5px;
+    vertical-align: top;
+    border-right: 1px solid #ccc;
+    border-bottom: 1px solid #ccc;
+}
+
+    </style>
+{% endblock html-head %}
+{% block title %}Tunnel{% endblock title %}
+{% block small-title %}Overview{% endblock small-title %}
+{% block content %}
+{% autoescape off %}{{ msg }}{% endautoescape %}
+{% endblock %}

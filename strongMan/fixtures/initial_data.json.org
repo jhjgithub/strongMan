@@ -1,0 +1,15 @@
+[
+  {
+    "model": "auth.user",
+    "pk": 1,
+    "fields": {
+      "username": "jiho",
+      "password": "pbkdf2_sha256$24000$k0JK2lfyW9Zz$Kz3KZeiJXgGY0IAexR1TZWqjx28ZJy6N+o/KSAQW2BM=",
+      "first_name": "Jiho",
+      "last_name": "Jung"
+    }
+  }
+]
+
+
+

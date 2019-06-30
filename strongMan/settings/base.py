@@ -18,6 +18,7 @@ INSTALLED_APPS = [
     'strongMan.apps.certificates',
     'strongMan.apps.eap_secrets',
     'strongMan.apps.server_connections',
+    'strongMan.apps.server_tunnels',
     'strongMan.apps.pools',
     'django_tables2',
     'dj_static',
@@ -106,7 +107,7 @@ def create_read_key(file_path):
         try:
             import random
             SECRET_KEY = ''.join([random.SystemRandom().choice('abcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*(-_=+)') for i in range(50)])
-            with open(SECRET_FILE,'w') as f:
+            with open(SECRET_FILE, 'w') as f:
                 f.write(SECRET_KEY)
             print("Create a new key in " + SECRET_FILE + ".")
             return SECRET_KEY
@@ -124,3 +125,36 @@ SESSION_COOKIE_AGE = 600  # 10 mins
 #SESSION_COOKIE_DOMAIN = None
 #SESSION_COOKIE_NAME = 'DSESSIONID'
 SESSION_COOKIE_SECURE = False
+
+DEBUG = True
+LOGGING = {
+    'version': 1,
+    'diable_existing_loggers': False,
+    'formatters': {
+        'standard': {
+            'format': '%(asctime)s [%(levelname)8s] %(message)s'
+        },
+    },
+    'handlers': {
+        'console': {
+            'level': 'DEBUG',
+            'class': 'logging.StreamHandler',
+            'formatter': 'standard'
+        },
+        'logfile': {
+            'level': 'DEBUG',
+            'class': 'logging.handlers.RotatingFileHandler',
+            'maxBytes': 1024 * 1024 * 10,
+            'backupCount': 10,
+            # 'class': 'logging.FileHandler',
+            'filename': '/var/log/django.log',
+            'formatter': 'standard'
+        },
+    },
+    'loggers': {
+        'default': {
+            'level': 'DEBUG',
+            'handlers': ['console', 'logfile']
+        },
+    },
+}
