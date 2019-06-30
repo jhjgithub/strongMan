@@ -117,3 +117,10 @@ def create_read_key(file_path):
 
 SECRET_KEY = create_read_key('secret_key.txt')
 DB_SECRET_KEY = create_read_key('db_key.txt')
+
+SESSION_EXPIRE_AT_BROWSER_CLOSE = True
+SESSION_SAVE_EVERY_REQUEST = True
+SESSION_COOKIE_AGE = 600  # 10 mins
+#SESSION_COOKIE_DOMAIN = None
+#SESSION_COOKIE_NAME = 'DSESSIONID'
+SESSION_COOKIE_SECURE = False
