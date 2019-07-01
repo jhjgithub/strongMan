@@ -324,20 +324,21 @@ def sa_summary_html():
         msg.append("</tbody></table>")
 
         msg.append("<h3></h3>")
-        msg.append("<table class=\"tunnel-header\" width=400> <thead> <tr>")
+        msg.append("<table class=\"tunnel-header\" width=1000> <thead> <tr>")
         msg.append("<th>Tunnel List</th></thead></table>")
 
         msg.append("<table class=\"tunnel\" > <thead><tr>")
         msg.append("<th scope=\"cols\" width=100>uid</th>")
-        msg.append("<th scope=\"cols\" width=300px>Date</th>")
-        msg.append("<th scope=\"cols\" width=300px>Name</th>")
+        msg.append("<th scope=\"cols\" width=200>User</th>")
+        msg.append("<th scope=\"cols\" width=400>Date</th>")
+        msg.append("<th scope=\"cols\" width=200>Name</th>")
         #msg.append("<th scope=\"cols\" width=350px>State</th>")
-        msg.append("<th scope=\"cols\" width=250px>Local</th>")
-        msg.append("<th scope=\"cols\" width=250px>Remote</th>")
-        msg.append("<th scope=\"cols\" width=250px>VIP(s)</th>")
-        msg.append("<th scope=\"cols\" width=300px>In Bytes</th>")
-        msg.append("<th scope=\"cols\" width=300px>Out Bytes</th>")
-        msg.append("<th scope=\"cols\" width=350px>Age</th>")
+        msg.append("<th scope=\"cols\" width=200>Local</th>")
+        msg.append("<th scope=\"cols\" width=200>Remote</th>")
+        msg.append("<th scope=\"cols\" width=200>VIP(s)</th>")
+        msg.append("<th scope=\"cols\" width=300>In Bytes</th>")
+        msg.append("<th scope=\"cols\" width=300>Out Bytes</th>")
+        msg.append("<th scope=\"cols\" width=300>Age</th>")
         msg.append("</tr></thead><tbody>")
 
         d = summary['sa-details']
@@ -345,6 +346,7 @@ def sa_summary_html():
         for uid, details in d.items():
             msg.append("<tr>")
             msg.append("<td scope=\"row\" >{}</td>".format(get_string(uid)))
+            msg.append("<td scope=\"row\" >{}</td>".format(get_string(details['login-id'])))
             msg.append("<td scope=\"row\" >%s</td>" % get_datetime(details['date']))
             msg.append("<td scope=\"row\" >{}</td>".format(details['name']))
             #msg.append("<td scope=\"row\" >" % details['state'])
