@@ -3,7 +3,7 @@ import subprocess
 import os
 
 DJANGO_DIR = os.path.dirname(os.path.realpath(__file__))
-PORT = 1515
+PORT = 800
 if __name__ == "__main__":
     os.chdir(DJANGO_DIR)
     print(os.getcwd())
