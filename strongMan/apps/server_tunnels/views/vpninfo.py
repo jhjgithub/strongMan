@@ -15,6 +15,8 @@ import time
 from collections import OrderedDict
 from datetime import timedelta, datetime
 import logging
+import psutil
+import platform
 
 from django.contrib import messages
 from django.shortcuts import render
@@ -209,6 +211,71 @@ class StrongSwan(object):
         return self.state.alive
 
 
+def get_net_usage():
+    usage = psutil.net_io_counters(pernic=True)
+    ifaces = psutil.net_if_addrs()
+    tsent = 0
+    trecv = 0
+    eth0_ip = ""
+    for k, v in ifaces.items():
+        if k == 'lo':
+            continue
+
+        ip = v[0].address
+        if k == 'eth0':
+            eth0_ip = ip
+
+        data = usage[k]
+        nic = usage[k]
+        tsent += nic.bytes_sent
+        trecv += nic.bytes_recv
+
+        #sent = convert_size(nic.bytes_sent)
+        #recv = convert_size(nic.bytes_recv)
+        #print("%s: IP: %s, Sent: %s, Recv: %s" % (k, ip, sent, recv))
+
+    total = convert_size(tsent + trecv)
+    tsent = convert_size(tsent)
+    trecv = convert_size(trecv)
+    #print("Network Usage: Sent: %s, Recv: %s" % (tsent, trecv))
+
+    return {'total': total, 'tsent': tsent, 'trecv': trecv, 'eth0_ip': eth0_ip}
+
+
+def get_cpu_usage():
+    cpu = psutil.cpu_percent(interval=None)
+    #cpu = psutil.cpu_percent(interval=2)
+    #print("CPU Usage: %s" % (cpu))
+
+    return cpu
+
+
+def get_mem_usage():
+    mem = psutil.virtual_memory()
+    total = convert_size(mem.total)
+    available = convert_size(mem.available)
+    used = convert_size(mem.used)
+    free = convert_size(mem.free)
+    #print("Mem Usage: %s, Available: %s, Used: %s, Free: %s" % (total, available, used, free))
+    return {'total': total, 'available': available, 'used': used, 'free': free}
+
+
+def get_disk_usage():
+    disk = psutil.disk_usage('/')
+    total = convert_size(disk.total)
+    used = convert_size(disk.used)
+    free = convert_size(disk.free)
+    #print("Disk Usage: %s, Used: %s(%.1f%%), Free: %s" % (total, used, disk.percent, free))
+    return {'total': total, 'used': used, 'free': free}
+
+
+def get_boot_time():
+    bt = psutil.boot_time()
+    bt_str = datetime.fromtimestamp(bt).strftime("%Y-%m-%d %H:%M:%S")
+    #print("Boot Time: %s" % (bt_str))
+    return bt_str
+
+
 def sa_summary():
     summary = {'summary': {'conns': 0, 'sas': 0}, 'sa-details': {}, 'userinfo': {}}
 
@@ -265,33 +332,38 @@ def sa_summary_html():
 
     try:
         summary = sa_summary()
+        netusage = get_net_usage()
+        cpuusage = get_cpu_usage()
+        memusage = get_mem_usage()
+        diskusage = get_disk_usage()
+        bt = get_boot_time()
 
-        #msg.append("<html><head>")
 
-        # head tag
-        #msg.append("<title>VPN Tunnel</title>")
-        #msg.append("</head>")
+        #msg.append("<h2><span> <p> System Infomation </p> </h2>")
+        msg.append("<table class=\"tunnel-header\" width=400> <thead> <tr>")
+        msg.append("<th >System Summary</th></thead></table>")
 
-        #myhost = os.uname()[1]
-        #myip = get_ip_address('eth0')
-        myhost = "Unknown"
-        myip = "Unknown"
+        msg.append("<table class=\"tunnel\" width=1100> <thead> <tr>")
+        msg.append("<th scope=\"cols\" width=150>Host(IP)</th>")
+        msg.append("<th scope=\"cols\" width=300>Bytes(In/Out)</th>")
+        msg.append("<th scope=\"cols\" width=100>CPU</th>")
+        msg.append("<th scope=\"cols\" width=150>Memory(Free)</th>")
+        msg.append("<th scope=\"cols\" width=150>Disk(Free)</th>")
+        msg.append("<th scope=\"cols\" widht=150>System Boot Time</th></tr></thead><tbody><tr>")
 
-        # body tag
-        #msg.append("<body> ")
-        #msg.append("<h2><span> <p> VPN Tunnel Infomation </p> </h2>")
-
-        #msg.append("<table class=\"tunnel-header\" width=400> <thead> <tr>")
-        #msg.append("<th >Server</th></thead></table>")
-        #msg.append("<table class=\"tunnel\" width=400> <thead> <tr>")
-        #msg.append("<th scope=\"cols\" width=200>Host Name</th>")
-        #msg.append("<th scope=\"cols\" widht=200>IP</th></tr></thead><tbody><tr>")
-        #msg.append("<td scope=\"row\">%s</td>" % myhost)
-        #msg.append("<td scope=\"row\">%s</td></tr></tbody></table>" % myip)
+        hname = platform.node()
+        msg.append("<td scope=\"row\">%s<br>%s</td>" % (hname, netusage['eth0_ip']))
+        msg.append("<td scope=\"row\">%s<br>(Sent:%s Revc:%s) </td>" % (netusage['total'], netusage['tsent'], netusage['trecv']))
+        msg.append("<td scope=\"row\">%d %%</td>" % cpuusage)
+        msg.append("<td scope=\"row\">%s<br>%s</td>" % (memusage['total'], memusage['free']))
+        msg.append("<td scope=\"row\">%s<br>%s</td>" % (diskusage['total'], diskusage['free']))
+        msg.append("<td scope=\"row\">%s</td>" % bt)
+        msg.append("</tr></tbody></table>")
 
         s = summary['summary']
 
-        msg.append("<h2> </h2><table class=\"tunnel-header\" width=400> <thead> <tr>")
+        msg.append("<h3></h3>")
+        msg.append("<table class=\"tunnel-header\" width=400> <thead> <tr>")
         msg.append("<th >Tunnel Summary</th></thead></table>")
 
         msg.append("<table class=\"tunnel\" width=400> <thead> <tr>")
@@ -317,10 +389,10 @@ def sa_summary_html():
         msg.append("</tbody></table>")
 
         msg.append("<h3></h3>")
-        msg.append("<table class=\"tunnel-header\" width=1000> <thead> <tr>")
+        msg.append("<table class=\"tunnel-header\" width=400> <thead> <tr>")
         msg.append("<th>Active Tunnel Information</th></thead></table>")
 
-        msg.append("<table class=\"tunnel\" > <thead><tr>")
+        msg.append("<table class=\"tunnel\" width=1100> <thead><tr>")
         msg.append("<th scope=\"cols\" width=100>UID</th>")
         msg.append("<th scope=\"cols\" width=200>User</th>")
         msg.append("<th scope=\"cols\" width=400>Date</th>")
