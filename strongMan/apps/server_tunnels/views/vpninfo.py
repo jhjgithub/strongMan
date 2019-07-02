@@ -302,15 +302,15 @@ def sa_summary_html():
         msg.append("<th >Tunnel Summary</th></thead></table>")
 
         msg.append("<table class=\"tunnel\" width=400> <thead> <tr>")
-        msg.append("<th scope=\"cols\" width=200>Connections</th>")
-        msg.append("<th scope=\"cols\" widht=200>Tunnels</th></tr></thead><tbody><tr>")
+        msg.append("<th scope=\"cols\" width=200>Configurations</th>")
+        msg.append("<th scope=\"cols\" widht=200>Active Tunnels</th></tr></thead><tbody><tr>")
         msg.append("<td scope=\"row\">%d</td>" % s['conns'])
         msg.append("<td scope=\"row\">%d</td></tr></tbody></table>" % s['sas'])
 
         u = summary['userinfo']
         msg.append("<h3></h3>")
         msg.append("<table class=\"tunnel-header\" width=400> <thead> <tr>")
-        msg.append("<th>Login Summary</th></thead></table>")
+        msg.append("<th>Account Summary</th></thead></table>")
         msg.append("<table class=\"tunnel\" width=400> <thead> <tr>")
         msg.append("<th scope=\"cols\" width=200>Name</td>")
         msg.append("<th scope=\"cols\" width=200>Login Count</td></tr><tbody><tr>")
@@ -325,10 +325,10 @@ def sa_summary_html():
 
         msg.append("<h3></h3>")
         msg.append("<table class=\"tunnel-header\" width=1000> <thead> <tr>")
-        msg.append("<th>Tunnel List</th></thead></table>")
+        msg.append("<th>Active Tunnel Information</th></thead></table>")
 
         msg.append("<table class=\"tunnel\" > <thead><tr>")
-        msg.append("<th scope=\"cols\" width=100>uid</th>")
+        msg.append("<th scope=\"cols\" width=100>UID</th>")
         msg.append("<th scope=\"cols\" width=200>User</th>")
         msg.append("<th scope=\"cols\" width=400>Date</th>")
         msg.append("<th scope=\"cols\" width=200>Name</th>")

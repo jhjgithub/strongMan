@@ -2,6 +2,13 @@
 
 DST_DIR="/var/www/strongMan"
 
+if [ -d "$DST_DIR" ]; then
+	echo "stop strongMan"
+	systemctl stop strongMan
+	sleep 1
+	rm -rf $DST_DIR
+fi
+
 echo "add target dir: $DST_DIR"
 mkdir -p $DST_DIR
 
