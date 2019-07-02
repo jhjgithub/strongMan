@@ -12,9 +12,8 @@ import vici
 import multiprocessing
 import collections
 import time
-import datetime
 from collections import OrderedDict
-from datetime import timedelta
+from datetime import timedelta, datetime
 import logging
 
 from django.contrib import messages
@@ -72,14 +71,6 @@ def convert_time(seconds, granularity=2):
     return ', '.join(result[:granularity])
 
 
-def get_datetime(age):
-    _age = int(age)
-    #t = time.time()
-    #t = t - _age;
-    s = datetime.datetime.fromtimestamp(_age).strftime("%Y-%m-%d %I:%M:%S")
-    return s
-
-
 class VState(object):
     """holds the VPN state"""
     def __init__(self):
@@ -118,7 +109,9 @@ class StrongSwan(object):
 
             si['name'] = name
             age = sa['established']
-            si['date'] = str(int(time.time()) - int(age))
+            now = datetime.now()
+            now = now.replace(microsecond=0)
+            si['date'] = now - timedelta(seconds=int(age))
             si['age'] = age
             si['state'] = sa['state']
             si['local'] = sa['local-host']
@@ -347,7 +340,7 @@ def sa_summary_html():
             msg.append("<tr>")
             msg.append("<td scope=\"row\" >{}</td>".format(get_string(uid)))
             msg.append("<td scope=\"row\" >{}</td>".format(get_string(details['login-id'])))
-            msg.append("<td scope=\"row\" >%s</td>" % get_datetime(details['date']))
+            msg.append("<td scope=\"row\" >{}</td>".format(details['date']))
             msg.append("<td scope=\"row\" >{}</td>".format(details['name']))
             #msg.append("<td scope=\"row\" >" % details['state'])
             msg.append("<td scope=\"row\" >{}</td>".format(get_string(details['local'])))
