@@ -126,7 +126,6 @@ SESSION_COOKIE_AGE = 600  # 10 mins
 #SESSION_COOKIE_NAME = 'DSESSIONID'
 SESSION_COOKIE_SECURE = False
 
-DEBUG = True
 LOGGING = {
     'version': 1,
     'diable_existing_loggers': False,
