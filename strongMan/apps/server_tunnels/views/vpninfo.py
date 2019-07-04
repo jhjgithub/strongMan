@@ -366,11 +366,11 @@ def sa_summary_html():
 
         msg.append("<table class=\"tunnel\" width=1100> <thead> <tr>")
         msg.append("<th scope=\"cols\" width=150>Host(IP)</th>")
-        msg.append("<th scope=\"cols\" width=300>Bytes(In/Out)</th>")
+        msg.append("<th scope=\"cols\" width=300>Traffic(In/Out)</th>")
         msg.append("<th scope=\"cols\" width=100>CPU</th>")
         msg.append("<th scope=\"cols\" width=150>Memory(Free)</th>")
         msg.append("<th scope=\"cols\" width=150>Disk(Free)</th>")
-        msg.append("<th scope=\"cols\" widht=150>System Boot Time</th></tr></thead><tbody><tr>")
+        msg.append("<th scope=\"cols\" widht=150>Boot Date</th></tr></thead><tbody><tr>")
 
         hname = platform.node()
         msg.append("<td scope=\"row\">%s<br>%s</td>" % (hname, netusage['eth0_ip']))
@@ -396,9 +396,9 @@ def sa_summary_html():
         u = summary['userinfo']
         msg.append("<h3></h3>")
         msg.append("<table class=\"tunnel-header\" width=400> <thead> <tr>")
-        msg.append("<th>Account Summary</th></thead></table>")
+        msg.append("<th>Login Summary</th></thead></table>")
         msg.append("<table class=\"tunnel\" width=400> <thead> <tr>")
-        msg.append("<th scope=\"cols\" width=200>Name</td>")
+        msg.append("<th scope=\"cols\" width=200>User</td>")
         msg.append("<th scope=\"cols\" width=200>Login Count</td></tr><tbody><tr>")
 
         for name, cnt in u.items():
@@ -414,10 +414,10 @@ def sa_summary_html():
         msg.append("<th>Active Tunnel Information</th></thead></table>")
 
         msg.append("<table class=\"tunnel\" width=1100> <thead><tr>")
-        msg.append("<th scope=\"cols\" width=100>UID</th>")
+        msg.append("<th scope=\"cols\" width=100>ID</th>")
         msg.append("<th scope=\"cols\" width=200>User</th>")
         msg.append("<th scope=\"cols\" width=400>Date</th>")
-        msg.append("<th scope=\"cols\" width=200>Name</th>")
+        msg.append("<th scope=\"cols\" width=200>Config</th>")
         #msg.append("<th scope=\"cols\" width=350px>State</th>")
         msg.append("<th scope=\"cols\" width=200>Local</th>")
         msg.append("<th scope=\"cols\" width=200>Remote</th>")
