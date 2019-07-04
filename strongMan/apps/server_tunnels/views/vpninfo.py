@@ -53,10 +53,10 @@ def convert_size(size, precision=2):
     return "%.*f %s" % (precision, size, suffixes[suffixIndex])
 
 
-def convert_time_old(seconds, granularity=2):
+def convert_time(seconds, granularity=2):
     intervals = (
         ('d', 86400),    # 60 * 60 * 24
-        ('hours', 3600),    # 60 * 60
+        ('h', 3600),    # 60 * 60
         ('m', 60),
         ('s', 1),
         )
@@ -74,7 +74,7 @@ def convert_time_old(seconds, granularity=2):
     return ', '.join(result[:granularity])
 
 
-def convert_time(sec):
+def convert_time_new(sec):
     seconds_to_minute = 60
     seconds_to_hour = 60 * seconds_to_minute
     seconds_to_day = 24 * seconds_to_hour
