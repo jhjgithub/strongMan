@@ -53,9 +53,10 @@ def convert_size(size, precision=2):
     return "%.*f %s" % (precision, size, suffixes[suffixIndex])
 
 
-def convert_time(seconds, granularity=2):
+def convert_time_old(seconds, granularity=2):
     intervals = (
-        ('d', 86400),    # 60 * 60 * 24 ('hours', 3600),    # 60 * 60
+        ('d', 86400),    # 60 * 60 * 24
+        ('hours', 3600),    # 60 * 60
         ('m', 60),
         ('s', 1),
         )
@@ -71,6 +72,26 @@ def convert_time(seconds, granularity=2):
             result.append("{}{}".format(value, name))
 
     return ', '.join(result[:granularity])
+
+
+def convert_time(sec):
+    seconds_to_minute = 60
+    seconds_to_hour = 60 * seconds_to_minute
+    seconds_to_day = 24 * seconds_to_hour
+
+    days = sec / seconds_to_day
+    sec %= seconds_to_day
+
+    hours = sec / seconds_to_hour
+    sec %= seconds_to_hour
+
+    minutes = sec / seconds_to_minute
+    sec %= seconds_to_minute
+
+    seconds = sec
+
+    #print("%dD, %dH, %dm, %ds" % (days, hours, minutes, seconds))
+    print("%d Days %d:%d:%d" % (days, hours, minutes, seconds))
 
 
 class VState(object):
